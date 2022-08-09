@@ -19,10 +19,15 @@
 from importlib.metadata import PackageNotFoundError
 from importlib.metadata import version
 
+from .timer import Timer
+from .tempfile import TempfileManager
+from .debug import debug
+
 
 try:
     __version__: str = version(__name__)
 except PackageNotFoundError:
-    from ._version import version as __version__
-except ImportError:
-    __version__: str = "unknown version"
+    try:
+        from ._version import version as __version__
+    except ModuleNotFoundError:
+        __version__: str = "unknown version"
