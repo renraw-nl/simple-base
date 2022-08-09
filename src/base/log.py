@@ -18,10 +18,9 @@
 
 import sys
 import logging
-from typing import Optional, Callable
+from typing import Optional
 
 import structlog
-import functools
 from pythonjsonlogger import jsonlogger
 
 
@@ -90,25 +89,3 @@ def get_logger(name: Optional[str] = None, **kwargs) -> structlog.BoundLoggerBas
         return structlog.getLogger(name, **kwargs)
     else:
         return structlog.getLogger(**kwargs)
-
-
-def arguments(func, name: Optional[str] = 'Argument logger') -> Callable:
-    """
-    Decorator to log arguments and results passed to a method.
-
-    :param func:
-    :param name:
-    :return:
-    """
-    logger = get_logger(name)
-
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        logger.debug(f'Logging arguments for {func.__name__}', args=args, kwargs=kwargs)
-
-        results = func(*args, **kwargs)
-
-        logger.debug(f'Logging results for {func.__name__}', results=results)
-        return results
-
-    return wrapper
