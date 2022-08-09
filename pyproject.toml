@@ -1,0 +1,80 @@
+[tool.poetry]
+name = "simple-base"
+version = "0.1.0"
+description = "Simple base for a project."
+license = "None"
+authors = ["Warner Leijenaar <git@renraw.nl>"]
+readme = "README.md"
+packages = [
+  {include = "base", from = "src"},
+  {include = "base/py.typed", from = "src"},
+]
+
+
+[tool.poetry.urls]
+"Homepage" = "https://github.com/renraw-nl/simple-base"
+
+
+[tool.poetry.dependencies]
+python = ">=3.11,<4.0"
+#python-dotenv = ">=0.20.0"
+#click = ">=8.0.0"
+#PySide6 = ">=6.3.1"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+mypy = "*"
+black = "*"
+isort = "*"
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+#[tool.poetry.scripts]
+#cli = 'office_unlocker.cli:run'
+#gui = 'office_unlocker.gui:run'
+
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+addopts = "--no-cov-on-fail --showlocals --strict-markers"
+testpaths = ["tests"]
+
+
+[tool.mypy]
+allow_redefinition = true
+disallow_any_generics = false
+disallow_subclassing_any = true
+disallow_untyped_calls = false
+disallow_untyped_defs = true
+implicit_reexport = true
+no_implicit_optional = true
+show_error_codes = true
+strict = true
+strict_equality = true
+strict_optional = false
+warn_redundant_casts = true
+warn_return_any = false
+warn_unused_configs = true
+warn_unused_ignores = true
+
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+
+[tool.isort]
+combine_as_imports = true
+force_grid_wrap = 0
+include_trailing_comma = true
+known_first_party = "builder, tests"
+line_length = 88
+multi_line_output = 3
+no_lines_before = "LOCALFOLDER"
+order_by_type = false
+reverse_relative = true
