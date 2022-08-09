@@ -21,8 +21,8 @@ from importlib.metadata import version
 
 
 try:
-    __version__ = version(__name__)
+    __version__: str = version(__name__)
 except PackageNotFoundError:
     from ._version import version as __version__
 except ImportError:
-    __version__ = "unknown version"
+    __version__: str = "unknown version"

@@ -18,13 +18,14 @@
 
 import sys
 import logging
+from typing import Optional, Callable
+
 import structlog
-import typing as t
 import functools
 from pythonjsonlogger import jsonlogger
 
 
-def init(debug: t.Optional[bool] = False):
+def init(debug: Optional[bool] = False) -> None:
     """
     Initialise the stdlib logging and structlog libraries.
 
@@ -71,7 +72,7 @@ def init(debug: t.Optional[bool] = False):
         )
 
 
-def get_logger(name: t.Optional[str] = None, **kwargs) -> structlog.BoundLoggerBase:
+def get_logger(name: Optional[str] = None, **kwargs) -> structlog.BoundLoggerBase:
     """
     Return a structlog logger instance, optionally named.
 
@@ -91,7 +92,7 @@ def get_logger(name: t.Optional[str] = None, **kwargs) -> structlog.BoundLoggerB
         return structlog.getLogger(**kwargs)
 
 
-def arguments(func, name: t.Optional[str] = 'Argument logger'):
+def arguments(func, name: Optional[str] = 'Argument logger') -> Callable:
     """
     Decorator to log arguments and results passed to a method.
 

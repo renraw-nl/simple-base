@@ -10,9 +10,9 @@
 import shutil
 from contextlib import ContextDecorator
 from pathlib import Path
-import typing as t
 import tempfile
 import os
+from typing import Optional, Any
 
 from .utils import get_uuid
 
@@ -23,9 +23,9 @@ class TempfileManager(ContextDecorator):
 
     def __init__(
         self,
-        tmp_sub_dir: t.Optional[str] = None,
-        clean_on_exit: t.Optional[bool] = True,
-    ):
+        tmp_sub_dir: Optional[str] = None,
+        clean_on_exit: Optional[bool] = True,
+    ) -> None:
 
         if not tmp_sub_dir:
             tmp_sub_dir = get_uuid()
@@ -44,7 +44,7 @@ class TempfileManager(ContextDecorator):
 
         self.clean_on_exit = clean_on_exit
 
-    def _ensure_tmp_dir(self):
+    def _ensure_tmp_dir(self) -> None:
         if not self.tmp_dir.exists() or not self.tmp_dir.is_dir():
             self.tmp_dir.mkdir(parents=False, exist_ok=False)
 
@@ -53,22 +53,22 @@ class TempfileManager(ContextDecorator):
                 f"Unable to write to temporary folder ({self.tmp_dir})"
             )
 
-    def clean_tmp_dir(self):
+    def clean_tmp_dir(self) -> None:
         shutil.rmtree(self.tmp_dir, ignore_errors=True)
 
     def __enter__(self) -> "TempfileManager":
         self._ensure_tmp_dir()
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         if self.clean_on_exit:
             self.clean_tmp_dir()
 
-    def __del__(self):
+    def __del__(self) -> None:
         self.clean_tmp_dir()
 
     def tmp_fn(
-        self, prepend: t.Optional[str] = None, suffix: t.Optional[str] = None
+        self, prepend: Optional[str] = None, suffix: Optional[str] = None
     ) -> Path:
         self._ensure_tmp_dir()
 

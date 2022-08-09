@@ -6,6 +6,6 @@ Since  : 2022-07-04
 import uuid
 
 
-def get_uuid():
+def get_uuid() -> str:
     """Returns a UUID4"""
     return str(uuid.uuid4())
