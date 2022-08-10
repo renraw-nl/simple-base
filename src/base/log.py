@@ -16,9 +16,9 @@
     Since  : 2022-07-04
 """
 
-import sys
 import logging
-from typing import Optional
+import sys
+from typing import Any, Optional
 
 import structlog
 from pythonjsonlogger import jsonlogger
@@ -66,12 +66,16 @@ def init(debug: Optional[bool] = False) -> None:
         json_handler.setFormatter(jsonlogger.JsonFormatter())
         logging.basicConfig(
             format="%(message)s",
-            handlers=[json_handler, ],
+            handlers=[
+                json_handler,
+            ],
             level=log_level,  # Or whatever the general level should be
         )
 
 
-def get_logger(name: Optional[str] = None, **kwargs) -> structlog.BoundLoggerBase:
+def get_logger(
+    name: Optional[str] = None, **kwargs: dict[str, Any]
+) -> structlog.BoundLoggerBase:
     """
     Return a structlog logger instance, optionally named.
 

@@ -16,18 +16,16 @@
     since : 2022-07-04
 """
 
-from importlib.metadata import PackageNotFoundError
-from importlib.metadata import version
+from importlib.metadata import PackageNotFoundError, version
 
-from .timer import Timer
-from .tempfile import TempfileManager
 from .debug import debug
-
+from .tempfile import TempfileManager
+from .timer import Timer
 
 try:
     __version__: str = version(__name__)
 except PackageNotFoundError:
     try:
-        from ._version import version as __version__
-    except ModuleNotFoundError:
+        from ._version import version as __version__  # no-qa
+    except (ImportError, ModuleNotFoundError):
         __version__: str = "unknown version"

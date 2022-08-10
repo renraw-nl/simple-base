@@ -29,6 +29,7 @@ class Timer(ContextDecorator):
         sleep(30)
     ```
     """
+
     start: float
     logger: structlog.BoundLoggerBase
     msg: str = "Timed duration"
@@ -36,7 +37,7 @@ class Timer(ContextDecorator):
     def __init__(
         self,
         msg: Optional[str] = None,
-        logger: Optional[structlog.BoundLoggerBase] = None
+        logger: Optional[structlog.BoundLoggerBase] = None,
     ) -> None:
         self.__start(msg, logger)
 
